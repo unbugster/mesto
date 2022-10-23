@@ -1,0 +1,19 @@
+.gallery__like {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  cursor: pointer;
+  opacity: 1;
+  width: 22px;
+  height: 19px;
+  background-color: transparent;
+  background-image: url('../../../images/gallery_like-disabled.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: opacity .3s ease-in-out;
+}
+
+.gallery__like:hover {
+  opacity: .5;
+}

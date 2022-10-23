@@ -1,0 +1,17 @@
+.profile__edit-btn {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #FFFFFF;
+  transform: translate(0, -50%);
+  background: url('../../../images/profile_edit-btn.svg') no-repeat center / cover;
+  transition: opacity .3s ease-in-out;
+  cursor: pointer;
+}
+
+.profile__edit-btn:hover {
+  opacity: .6;
+}

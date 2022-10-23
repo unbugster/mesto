@@ -1,0 +1,12 @@
+.profile__activity {
+  font-size: 14px;
+  line-height: 1.21;
+  margin: 0;
+}
+
+@media screen and (min-width:768px) {
+  .profile__activity {
+    font-size: 18px;
+    line-height: 1.22;
+  }
+}

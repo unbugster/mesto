@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  padding: 28px 19px 31px;
+  border-bottom: 1px solid gray;
+}
+
+@media screen and (min-width:768px) {
+  .header {
+    padding-top: 45px;
+    padding-bottom: 41px;
+  }
+}
+
+@media screen and (min-width:1280px) {
+  .header {
+    padding-left: 0;
+  }
+}

@@ -1,0 +1,9 @@
+.page__gallery {
+  margin-bottom: 48px;
+}
+
+@media screen and (min-width:768px) {
+  .page__gallery {
+    margin-bottom: 66px;
+  }
+}

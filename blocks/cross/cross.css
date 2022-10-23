@@ -1,0 +1,40 @@
+.cross {
+  position: relative;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  padding: 17px 0;
+}
+
+@media screen and (min-width:768px) {
+  .cross {
+    width: 22px;
+    height: 22px;
+    padding: 14px 0;
+  }
+}
+
+.cross::before,
+.cross::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 16px;
+  height: 2px;
+  transform: translate(-50%, -50%);
+  background: #FFFFFF;
+}
+
+@media screen and (min-width:768px) {
+
+  .cross::before,
+  .cross::after {
+    width: 22px;
+  }
+}
+
+.cross::after {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
