@@ -3,29 +3,29 @@
 @import url(../blocks/body/body.css);
 @import url(../blocks/container/container.css);
 @import url(../blocks/page/page.css);
-@import url(../blocks/page/__profile/page__profile.css);
-@import url(../blocks/page/__gallery/page__gallery.css);
-
+@import url(../blocks/main/__profile/main__profile.css);
+@import url(../blocks/main/__gallery/main__gallery.css);
 
 @import url(../blocks/header/header.css);
 @import url(../blocks/logo/logo.css);
 
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__img/profile__img.css);
+@import url(../blocks/profile/__cross/profile__cross.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__edit-btn/profile__edit-btn.css);
 @import url(../blocks/profile/__activity/profile__activity.css);
 @import url(../blocks/profile/__add-btn/profile__add-btn.css);
 
-@import url(../blocks/cross/cross.css);
-
 @import url(../blocks/gallery/__list/gallery__list.css);
 @import url(../blocks/gallery/__item/gallery__item.css);
 @import url(../blocks/gallery/__img/gallery__img.css);
+@import url(../blocks/gallery/__info/gallery__info.css);
+
 @import url(../blocks/gallery/__title/gallery__title.css);
-@import url(../blocks/gallery/__like/gallery__like.css);
-@import url(../blocks/gallery/__like/_active/gallery__like_active.css);
+@import url(../blocks/gallery/__like-btn/gallery__like-btn.css);
+@import url(../blocks/gallery/__like-btn/_active/gallery__like-btn_active.css);
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);

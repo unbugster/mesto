@@ -1,7 +1,4 @@
-.gallery__like {
-  position: absolute;
-  top: 30px;
-  right: 20px;
+.gallery__like-btn {
   cursor: pointer;
   opacity: 1;
   width: 22px;
@@ -12,8 +9,9 @@
   background-position: center;
   background-size: contain;
   transition: opacity .3s ease-in-out;
+  border: none;
 }
 
-.gallery__like:hover {
+.gallery__like-btn:hover {
   opacity: .5;
 }

@@ -1,4 +1,4 @@
-.cross {
+.profile__cross {
   position: relative;
   display: flex;
   width: 16px;
@@ -7,15 +7,15 @@
 }
 
 @media screen and (min-width:768px) {
-  .cross {
+  .profile__cross {
     width: 22px;
     height: 22px;
     padding: 14px 0;
   }
 }
 
-.cross::before,
-.cross::after {
+.profile__cross::before,
+.profile__cross::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -29,12 +29,12 @@
 
 @media screen and (min-width:768px) {
 
-  .cross::before,
-  .cross::after {
+  .profile__cross::before,
+  .profile__cross::after {
     width: 22px;
   }
 }
 
-.cross::after {
+.profile__cross::after {
   transform: translate(-50%, -50%) rotate(-90deg);
 }
