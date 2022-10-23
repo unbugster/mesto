@@ -1,11 +1,18 @@
 .profile__info {
   text-align: center;
   margin-bottom: 30px;
+  position: relative;
+  margin-right: 10px;
+  padding-right: calc(10px + 18px);
+  padding-left: 37px;
 }
 
 @media screen and (min-width:768px) {
   .profile__info {
     margin-bottom: 0;
     text-align: left;
+    margin-right: 20px;
+    padding-right: calc(18px + 24px);
+    padding-left: 0;
   }
 }

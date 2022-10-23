@@ -1,15 +1,22 @@
 .profile__edit-btn {
   content: '';
   position: absolute;
-  top: 50%;
+  top: 7px;
   right: 0;
   width: 18px;
   height: 18px;
   border: 1px solid #FFFFFF;
-  transform: translate(0, -50%);
   background: url('../../../images/profile_edit-btn.svg') no-repeat center / cover;
   transition: opacity .3s ease-in-out;
   cursor: pointer;
+}
+
+@media screen and (min-width:768px) {
+  .profile__edit-btn {
+    width: 24px;
+    height: 24px;
+    top: 15px;
+  }
 }
 
 .profile__edit-btn:hover {
