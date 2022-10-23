@@ -1,21 +1,23 @@
 .popup__save-btn {
-  cursor: pointer;
-  opacity: 1;
+  font-family: "Inter", Arial, sans-serif;
   text-align: center;
   width: 100%;
   min-height: 50px;
-  outline: none;
-  border: none;
   border-radius: 2px;
+  color: #FFFFFF;
   background-color: #000000;
-  font-family: "Inter", Arial, sans-serif;
+  border: none;
+  outline: none;
   font-weight: 400;
   font-size: 14px;
-  line-height: 1.21;
-  color: #FFFFFF;
-  transition: opacity .3s ease-in-out;
-  font-size: 14px;
   line-height: 1.22;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
+}
+
+.popup__save-btn:hover {
+  opacity: .8;
 }
 
 @media screen and (min-width:768px) {
@@ -23,8 +25,4 @@
     font-size: 18px;
     line-height: 1.22;
   }
-}
-
-.popup__save-btn:hover {
-  opacity: .8;
 }
