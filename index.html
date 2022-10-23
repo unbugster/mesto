@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+
+<body class="body">
+  <div class="page">
+    <header class="header">
+      <img class="logo" src="./images/header-logo.svg" alt="Логотип">
+    </header>
+    <main class="main">
+      <section class="profile page__profile container" aria-label="Информация о пользователе">
+        <img class="profile__img" src="./images/profile_avatar.jpg" alt="Аватар пользователя">
+        <div class="profile__info">
+          <h1 class="profile__title">Жак-Ив Кусто</h1>
+          <p class="profile__activity">Исследователь океана</p>
+        </div>
+        <button class="profile__add-btn" type="button">
+          <span class="cross"></span>
+        </button>
+      </section>
+      <section class="gallery page__gallery container" aria-label="Фотогалерея">
+        <ul class="gallery__list">
+          <li class="gallery__item">
+            <img class="gallery__img" src="./images/gallery_ShinjukuYakitoriAlley_m.jpg"
+              alt="Небольшая улица с фонарями, вывесками магазинов и кафе в Синдзюку ночью">
+            <p class="gallery__title">Токио, Синдзюку<span class="gallery__like gallery__like_active"></span></p>
+          </li>
+          <li class="gallery__item">
+            <img class="gallery__img" src="./images/gallery_Asakusa_m.jpg" alt="Храм Сэнсодзи с ночьной иллюминацией">
+            <p class="gallery__title">Токио, Асакуса<span class="gallery__like"></span></p>
+          </li>
+          <li class="gallery__item">
+            <img class="gallery__img" src="./images/gallery_Fujiyoshida_m.jpg" alt="Вид на гору Фудзи">
+            <p class="gallery__title">Фудзиёсида<span class="gallery__like"></span></p>
+          </li>
+          <li class="gallery__item">
+            <img class="gallery__img" src="./images/gallery_fusihimiInari_m.jpg"
+              alt="Ряды ярко-красных ворот тории в святилище Фусими Инари">
+            <p class="gallery__title">Киото, Фусими Инари<span class="gallery__like"></span></p>
+          </li>
+          <li class="gallery__item">
+            <img class="gallery__img" src="./images/gallery_Hozen_m.jpg" alt="Белые японские фонари с иероглифами">
+            <p class="gallery__title">Минами-Альпы<span class="gallery__like"></span></p>
+          </li>
+          <li class="gallery__item">
+            <img class="gallery__img" src="./images/gallery_Kyoto2_m.jpg" alt="То-дзи, храмовый комплекс">
+            <p class="gallery__title">Киото<span class="gallery__like"></span></p>
+          </li>
+        </ul>
+      </section>
+      <section class="popup">
+        <form class="popup__form" name="edit-form">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <div class="popup__inputs-wrapper">
+            <input class="popup__input popup__input_info_name" name="profileName" type="text">
+            <input class="popup__input popup__input_info_activity" name="profileActivity" type="text">
+          </div>
+          <button class="popup__save-btn" type="submit">Сохранить</button>
+          <button class="popup__close-btn" type="button"></button>
+        </form>
+      </section>
+      <footer class="footer container">
+        <p class="footer__copyright">&copy;2022. Багаев Андрей</p>
+      </footer>
+    </main>
+  </div>
+</body>
+
+</html>
