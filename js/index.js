@@ -1,3 +1,5 @@
+import { initialCards } from "./cards.js";
+
 const PROFILE_EDIT_BTN = document.querySelector('.profile__edit-btn');
 const POPUP = document.querySelector('.popup');
 const POPUP_CLOSE_BTN = POPUP.querySelector('.popup__close-btn');
@@ -37,3 +39,25 @@ const saveChanges = (evt) => {
 }
 
 POPUP_FORM.addEventListener('submit', saveChanges);
+
+const GALLERY_ITEM_TEMPLATE = document.querySelector('#card-template').content;
+const GALLERY_LIST_CONTAINER = document.querySelector('.gallery__list');
+
+const getCardElement = (card) => {
+  const cardElement = GALLERY_ITEM_TEMPLATE.querySelector('.gallery__item').cloneNode(true);
+  const title = cardElement.querySelector('.gallery__title');
+  const image = cardElement.querySelector('.gallery__img');
+  title.textContent = card.name;
+  image.src = card.link;
+  image.alt = card.name;
+  image.alt = card.alt;
+
+  return cardElement;
+}
+
+const renderCard = (item) => {
+  const element = getCardElement(item);
+  GALLERY_LIST_CONTAINER.prepend(element);
+}
+
+initialCards.forEach(renderCard);
