@@ -34,7 +34,7 @@
       </footer>
     </main>
   </div>
-  <div class="popup">
+  <div class="popup" id="edit-profile">
     <form class="popup__form" name="edit-form">
       <h2 class="popup__title">Редактировать профиль</h2>
       <fieldset class="popup__inputs-wrapper">
@@ -45,6 +45,20 @@
       <button class="popup__close-btn" type="button"></button>
     </form>
   </div>
+
+  <div class="popup" id="add-card">
+    <form class="popup__form" name="add-form">
+      <h2 class="popup__title">Новое место</h2>
+      <fieldset class="popup__inputs-wrapper">
+        <input class="popup__input popup__input_info_card-name" name="cardName" type="text" placeholder="Название">
+        <input class="popup__input popup__input_info_card-link" name="cardImgLink" type="text"
+          placeholder="Ссылка на картинку">
+      </fieldset>
+      <button class="popup__save-btn" type="submit">Сохранить</button>
+      <button class="popup__close-btn" type="button"></button>
+    </form>
+  </div>
+
   <template id="card-template">
     <li class="gallery__item">
       <img class="gallery__img" src="" alt="">
