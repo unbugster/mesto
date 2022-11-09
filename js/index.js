@@ -25,6 +25,10 @@ const getPopupSaveBtn = (popup) => {
   return popup.querySelector('.popup__save-btn');
 }
 
+const likeToggle = (evt) => {
+  evt.target.classList.toggle('gallery__like-btn_active');
+}
+
 const getProfileTextValues = () => {
   EDIT_FORM_INPUT_NAME.value = PROFILE_NAME.textContent;
   EDIT_FORM_INPUT_ACTIVITY.value = PROFILE_ACTIVITY.textContent;
@@ -55,6 +59,9 @@ const getCardElement = (card) => {
   const cardElement = GALLERY_ITEM_TEMPLATE.querySelector('.gallery__item').cloneNode(true);
   const title = cardElement.querySelector('.gallery__title');
   const image = cardElement.querySelector('.gallery__img');
+  const like = cardElement.querySelector('.gallery__like-btn');
+
+  like.addEventListener('click', likeToggle);
   title.textContent = card.name;
   image.src = card.link;
   image.alt = card.name;
@@ -77,7 +84,6 @@ renderCards();
 const CARD_FORM_INPUT_NAME = document.querySelector('.popup__input_info_card-name');
 const CARD_FORM_INPUT_LINK = document.querySelector('.popup__input_info_card-link');
 
-
 const renderNewCard = () => {
   let link = CARD_FORM_INPUT_LINK.value;
   let name = CARD_FORM_INPUT_NAME.value;
@@ -86,7 +92,7 @@ const renderNewCard = () => {
     try {
       new URL(url);
     } catch (e) {
-      console.error('invalid url', e);
+      console.error('===invalid url', e);
       link = "https://images.unsplash.com/photo-1609743522653-52354461eb27?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80";
       name = "image not found";
       return false;
