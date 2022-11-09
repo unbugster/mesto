@@ -6,8 +6,8 @@ const POPUP_CLOSE_BTN = POPUP_PROFILE.querySelector('.popup__close-btn');
 const POPUP_FORM = POPUP_PROFILE.querySelector('.popup__form');
 const PROFILE_NAME = document.querySelector('.profile__name');
 const PROFILE_ACTIVITY = document.querySelector('.profile__activity');
-const FORM_INPUT_NAME = document.querySelector('.popup__input_info_name');
-const FORM_INPUT_ACTIVITY = document.querySelector('.popup__input_info_activity');
+const EDIT_FORM_INPUT_NAME = document.querySelector('.popup__input_info_name');
+const EDIT_FORM_INPUT_ACTIVITY = document.querySelector('.popup__input_info_activity');
 
 const openPopup = (popupEl) => {
   popupEl.classList.add('popup_opened');
@@ -26,8 +26,8 @@ const getPopupSaveBtn = (popup) => {
 }
 
 const getProfileTextValues = () => {
-  FORM_INPUT_NAME.value = PROFILE_NAME.textContent;
-  FORM_INPUT_ACTIVITY.value = PROFILE_ACTIVITY.textContent;
+  EDIT_FORM_INPUT_NAME.value = PROFILE_NAME.textContent;
+  EDIT_FORM_INPUT_ACTIVITY.value = PROFILE_ACTIVITY.textContent;
 }
 
 PROFILE_EDIT_BTN.addEventListener('click', () => {
@@ -41,8 +41,8 @@ POPUP_CLOSE_BTN.addEventListener('click', () => {
 
 const saveChanges = (evt) => {
   evt.preventDefault();
-  PROFILE_NAME.textContent = FORM_INPUT_NAME.value;
-  PROFILE_ACTIVITY.textContent = FORM_INPUT_ACTIVITY.value;
+  PROFILE_NAME.textContent = EDIT_FORM_INPUT_NAME.value;
+  PROFILE_ACTIVITY.textContent = EDIT_FORM_INPUT_ACTIVITY.value;
   closePopup(POPUP_PROFILE);
 }
 
@@ -67,25 +67,67 @@ const renderCard = (item) => {
   const element = getCardElement(item);
   GALLERY_LIST_CONTAINER.prepend(element);
 }
+const renderCards = () => {
+  GALLERY_LIST_CONTAINER.innerHTML = '';
+  initialCards.forEach(renderCard);
+}
 
-initialCards.forEach(renderCard);
+renderCards();
+
+const CARD_FORM_INPUT_NAME = document.querySelector('.popup__input_info_card-name');
+const CARD_FORM_INPUT_LINK = document.querySelector('.popup__input_info_card-link');
+
+
+const renderNewCard = () => {
+  let link = CARD_FORM_INPUT_LINK.value;
+  let name = CARD_FORM_INPUT_NAME.value;
+
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+    } catch (e) {
+      console.error('invalid url', e);
+      link = "https://images.unsplash.com/photo-1609743522653-52354461eb27?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80";
+      name = "image not found";
+      return false;
+    }
+    return true;
+  };
+  isValidUrl(link);
+
+  const newCard = {
+    name,
+    link,
+  }
+  initialCards.push(newCard);
+
+  renderCards();
+}
+
+const getPopupForm = (popup) => {
+  return popup.querySelector('.popup__form');
+}
 
 const PROFILE_ADD_CARD_BTN = document.querySelector('.profile__add-btn');
 const POPUP_CARD = document.querySelector('#add-card');
 
 PROFILE_ADD_CARD_BTN.addEventListener('click', () => {
   const closeBtn = getPopupCloseBtn(POPUP_CARD);
-  const saveBtn = getPopupSaveBtn(POPUP_CARD);
+  const form = getPopupForm(POPUP_CARD);
 
   closeBtn.addEventListener('click', () => {
     closePopup(POPUP_CARD);
   })
 
-  saveBtn.addEventListener('submit', (evt) => {
+  const submitHandler = (evt) => {
     evt.preventDefault();
-    // функция - должна взять данные из попапа и добавить в галерею.
+    renderNewCard();
+    form.reset();
     closePopup(POPUP_CARD);
-  })
+    form.removeEventListener('submit', submitHandler);
+  }
+
+  form.addEventListener('submit', submitHandler)
 
   openPopup(POPUP_CARD);
 });
