@@ -55,13 +55,23 @@ POPUP_FORM.addEventListener('submit', saveChanges);
 const GALLERY_ITEM_TEMPLATE = document.querySelector('#card-template').content;
 const GALLERY_LIST_CONTAINER = document.querySelector('.gallery__list');
 
-const getCardElement = (card) => {
+const removeCard = (evt) => {
+  const id = evt.target.parentElement.dataset.id;
+  initialCards.splice(id, 1);
+  renderCards();
+}
+
+const getCardElement = (card, ind) => {
   const cardElement = GALLERY_ITEM_TEMPLATE.querySelector('.gallery__item').cloneNode(true);
+  cardElement.dataset.id = ind;
   const title = cardElement.querySelector('.gallery__title');
   const image = cardElement.querySelector('.gallery__img');
   const like = cardElement.querySelector('.gallery__like-btn');
+  const remove = cardElement.querySelector('.gallery__remove-btn');
 
+  remove.addEventListener('click', removeCard)
   like.addEventListener('click', likeToggle);
+
   title.textContent = card.name;
   image.src = card.link;
   image.alt = card.name;
@@ -70,13 +80,14 @@ const getCardElement = (card) => {
   return cardElement;
 }
 
-const renderCard = (item) => {
-  const element = getCardElement(item);
+const renderCard = (item, ind) => {
+  const element = getCardElement(item, ind);
   GALLERY_LIST_CONTAINER.prepend(element);
 }
+
 const renderCards = () => {
   GALLERY_LIST_CONTAINER.innerHTML = '';
-  initialCards.forEach(renderCard);
+  initialCards.forEach((el, ind) => renderCard(el, ind));
 }
 
 renderCards();

@@ -61,12 +61,13 @@
   </div>
 
   <template id="card-template">
-    <li class="gallery__item">
+    <li class="gallery__item" data-id="">
       <img class="gallery__img" src="" alt="">
       <div class="gallery__info">
         <p class="gallery__title"></p>
-        <button type="button" class="gallery__like-btn"></button>
+        <button class="gallery__like-btn" type="button"></button>
       </div>
+      <button class="gallery__remove-btn" type="button"></button>
     </li>
   </template>
   <script src="./js/index.js" type="module"></script>

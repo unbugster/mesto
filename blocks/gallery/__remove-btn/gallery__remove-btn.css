@@ -1,0 +1,21 @@
+.gallery__remove-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-image: url('../../../images/gallery_remove.svg');
+  cursor: pointer;
+  opacity: 1;
+  width: 18px;
+  height: 19px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: opacity .3s ease-in-out;
+  border: none;
+}
+
+
+.gallery__remove-btn:hover {
+  opacity: .6;
+}
