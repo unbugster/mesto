@@ -56,9 +56,31 @@ const GALLERY_ITEM_TEMPLATE = document.querySelector('#card-template').content;
 const GALLERY_LIST_CONTAINER = document.querySelector('.gallery__list');
 
 const removeCard = (evt) => {
-  const id = evt.target.parentElement.dataset.id;
-  initialCards.splice(id, 1);
+  const cardId = evt.target.parentElement.dataset.id;
+  initialCards.splice(cardId, 1);
   renderCards();
+}
+
+const cardPopupContainerImage = document.querySelector('.popup_type_image');
+const cardPopupImage = cardPopupContainerImage.querySelector('.popup__img');
+const cardPopupImageCaption = cardPopupContainerImage.querySelector('.popup__caption');
+
+const getCardImageInfo = (element) => {
+
+  cardPopupImage.src = element.link;
+  cardPopupImage.alt = element.alt;
+  cardPopupImageCaption.textContent = element.name;
+}
+
+const POPUP_IMG = document.querySelector('#img');
+
+const openImgPopup = (card) => {
+  const closeBtn = getPopupCloseBtn(POPUP_IMG);
+  closeBtn.addEventListener('click', () => {
+    closePopup(POPUP_IMG);
+  })
+  getCardImageInfo(card)
+  openPopup(POPUP_IMG);
 }
 
 const getCardElement = (card, ind) => {
@@ -68,9 +90,11 @@ const getCardElement = (card, ind) => {
   const image = cardElement.querySelector('.gallery__img');
   const like = cardElement.querySelector('.gallery__like-btn');
   const remove = cardElement.querySelector('.gallery__remove-btn');
+  const img = cardElement.querySelector('.gallery__img');
 
   remove.addEventListener('click', removeCard)
   like.addEventListener('click', likeToggle);
+  img.addEventListener('click', () => openImgPopup(card));
 
   title.textContent = card.name;
   image.src = card.link;
@@ -160,3 +184,4 @@ const closePopupWindowOverlay = (evt) => {
 
 POPUP_PROFILE.addEventListener('click', closePopupWindowOverlay);
 POPUP_CARD.addEventListener('click', closePopupWindowOverlay);
+POPUP_IMG.addEventListener('click', closePopupWindowOverlay);
