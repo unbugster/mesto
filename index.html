@@ -35,19 +35,20 @@
     </main>
   </div>
 
-  <div class="popup" id="edit-profile">
+  <div class="popup" id="edit-profile-popup">
     <form class="popup__form" name="edit-form">
       <h2 class="popup__title">Редактировать профиль</h2>
       <fieldset class="popup__inputs-wrapper">
-        <input class="popup__input popup__input_info_name" name="profileName" type="text">
-        <input class="popup__input popup__input_info_activity" name="profileActivity" type="text">
+        <input class="popup__input popup__input_info_name" name="profileName" type="text" placeholder="Имя">
+        <input class="popup__input popup__input_info_activity" name="profileActivity" type="text"
+          placeholder="Деятельность">
       </fieldset>
       <button class="popup__save-btn" type="submit">Сохранить</button>
       <button class="popup__close-btn" type="button"></button>
     </form>
   </div>
 
-  <div class="popup" id="add-card">
+  <div class="popup" id="add-card-popup">
     <form class="popup__form" name="add-form">
       <h2 class="popup__title">Новое место</h2>
       <fieldset class="popup__inputs-wrapper">
@@ -60,7 +61,7 @@
     </form>
   </div>
 
-  <div class="popup popup_type_image" id="img">
+  <div class="popup popup_type_image" id="img-card-popup">
     <div class="popup__card">
       <button class="popup__close-btn" type="button"></button>
       <figure class="popup__figure">
@@ -70,9 +71,9 @@
     </div>
   </div>
 
-  <template id="card-template">
+  <template id="gallery-item-template">
     <li class="gallery__item" data-id="">
-      <img class="gallery__img" src="" alt="">
+      <img class="gallery__img" src="#" alt="">
       <div class="gallery__info">
         <p class="gallery__title"></p>
         <button class="gallery__like-btn" type="button"></button>
