@@ -16,7 +16,7 @@
     </header>
     <main class="main">
       <section class="profile main__profile container" aria-label="Информация о пользователе">
-        <img class="profile__img" src="./images/profile_avatar.jpg" alt="Аватар пользователя">
+        <img class="profile__img" src="./images/profile_avatar2.jpeg" alt="Аватар пользователя">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__edit-btn" type="button"></button>
@@ -39,12 +39,19 @@
     <form class="popup__form" name="edit-form">
       <h2 class="popup__title">Редактировать профиль</h2>
       <fieldset class="popup__inputs-wrapper">
-        <input class="popup__input popup__input_info_name" name="profileName" type="text" placeholder="Имя">
-        <input class="popup__input popup__input_info_activity" name="profileActivity" type="text"
-          placeholder="Деятельность">
+        <label class="popup__input-label">
+          <input id="password-input" class="popup__input popup__input_info_name" name="profileName" type="text"
+            placeholder="Имя" minlength="2" maxlength="40" required>
+          <span class="popup__input-error password-input-error"></span>
+        </label>
+        <label class="popup__input-label">
+          <input id="activity-input" class="popup__input popup__input_info_activity" name="profileActivity" type="text"
+            placeholder="Деятельность" minlength="2" maxlength="200" required>
+          <span class="popup__input-error activity-input-error"></span>
+        </label>
+        <button class="popup__save-btn" type="submit">Сохранить</button>
+        <button class="popup__close-btn" type="button"></button>
       </fieldset>
-      <button class="popup__save-btn" type="submit">Сохранить</button>
-      <button class="popup__close-btn" type="button"></button>
     </form>
   </div>
 
@@ -52,12 +59,19 @@
     <form class="popup__form" name="add-form">
       <h2 class="popup__title">Новое место</h2>
       <fieldset class="popup__inputs-wrapper">
-        <input class="popup__input popup__input_info_card-name" name="cardName" type="text" placeholder="Название">
-        <input class="popup__input popup__input_info_card-link" name="cardImgLink" type="text"
-          placeholder="Ссылка на картинку" required>
+        <label class="popup__input-label">
+          <input id="name-input" class="popup__input popup__input_info_card-name" name="cardName" type="text"
+            placeholder="Название" minlength="2" maxlength="30" required>
+          <span class="popup__input-error name-input-error"></span>
+        </label>
+        <label class="popup__input-label">
+          <input id="card-link-input" class="popup__input popup__input_info_card-link" name="cardImgLink" type="url"
+            placeholder="Ссылка на картинку" required>
+          <span class="popup__input-error card-link-input-error"></span>
+        </label>
+        <button class="popup__save-btn" type="submit">Сохранить</button>
+        <button class="popup__close-btn" type="button"></button>
       </fieldset>
-      <button class="popup__save-btn" type="submit">Сохранить</button>
-      <button class="popup__close-btn" type="button"></button>
     </form>
   </div>
 

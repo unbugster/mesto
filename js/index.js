@@ -1,4 +1,5 @@
 import { initialCards } from "./cards.js";
+import { enableValidation, hideInputError } from "./validate.js";
 
 const PROFILE_NAME = document.querySelector('.profile__name');
 const PROFILE_ACTIVITY = document.querySelector('.profile__activity');
@@ -25,23 +26,32 @@ const POPUP_ADD_CARD_FORM = POPUP_ADD_CARD.querySelector('.popup__form');
 
 const TEMPLATE_GALLERY_ITEM = document.querySelector('#gallery-item-template').content;
 
-const isValidUrl = (url) => {
-  try {
-    new URL(url);
-  } catch (err) {
-    console.error('===Некорректная ссылка на изображение', err);
-    return false;
-  }
-
-  return true;
+const VALIDATION_CONFIG = {
+  formSelector: '.popup__form',
+  formFieldset: '.popup__inputs-wrapper',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-btn',
+  inputLabelSelector: '.popup__input-label',
+  inactiveButtonClass: 'popup__save-btn_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible',
 };
+
+function closeModalWindowEsc(evt) {
+  const openedPopup = document.querySelector('.popup_opened')
+  if (evt.key === 'Escape' || evt.key === 'Esc') {
+    closePopup(openedPopup)
+  }
+}
 
 const openPopup = (popupEl) => {
   popupEl.classList.add('popup_opened');
+  document.addEventListener('keydown', closeModalWindowEsc);
 }
 
 const closePopup = (popupEl) => {
   popupEl.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeModalWindowEsc);
 }
 
 const getProfileTextValues = () => {
@@ -88,12 +98,17 @@ const openPopupProfileEditHandler = () => {
   getProfileTextValues();
 }
 
+const closePopupProfileEditHandler = () => {
+  hideEditProfileInputError(POPUP_EDIT_PROFILE, VALIDATION_CONFIG)
+}
+
 const closePopupWindowOverlayHandler = (evt) => {
   if (evt.target !== evt.currentTarget) {
     return;
   }
 
   closePopup(evt.target);
+  hideEditProfileInputError(evt.currentTarget, VALIDATION_CONFIG)
 }
 
 const getCardElement = (card) => {
@@ -111,6 +126,12 @@ const getCardElement = (card) => {
   image.src = card.link;
   image.alt = card.alt || card.name;
 
+  image.addEventListener("error", (evt) => {
+    evt.target.src = "https://clck.ru/32fEE4";
+    title.textContent = 'Image not found';
+    evt.onerror = null;
+  })
+
   return cardElement;
 }
 
@@ -122,11 +143,6 @@ const renderCard = (item) => {
 const renderNewCard = () => {
   let link = POPUP_ADD_CARD_INPUT_LINK.value;
   let name = POPUP_ADD_CARD_INPUT_NAME.value;
-
-  if (!isValidUrl(link)) {
-    link = "https://clck.ru/32fEE4";
-    name = "Image not found";
-  }
 
   const newCard = {
     name,
@@ -147,13 +163,24 @@ const addNewCardSubmitHandler = (evt) => {
   closePopup(POPUP_ADD_CARD);
 }
 
+const hideEditProfileInputError = (profilePopupEdit, selectors) => {
+  const formLabelProfileList = Array.from(profilePopupEdit.querySelectorAll(selectors.inputLabelSelector));
+
+  formLabelProfileList.forEach((formElement) => {
+    const inputProfile = formElement.querySelector(selectors.inputSelector);
+    hideInputError(formElement, inputProfile, selectors);
+  });
+}
+
 renderCards();
+enableValidation(VALIDATION_CONFIG);
 
 PROFILE_ADD_BTN.addEventListener('click', openAddCardPopupHandler);
 PROFILE_EDIT_BTN.addEventListener('click', openPopupProfileEditHandler)
 
 POPUP_EDIT_PROFILE_FORM.addEventListener('submit', saveProfileChangesHandler);
 POPUP_EDIT_PROFILE_CLOSE_BTN.addEventListener('click', closePopupHandler)
+POPUP_EDIT_PROFILE_CLOSE_BTN.addEventListener('click', closePopupProfileEditHandler)
 POPUP_EDIT_PROFILE.addEventListener('click', closePopupWindowOverlayHandler);
 
 POPUP_ADD_CARD_FORM.addEventListener('submit', addNewCardSubmitHandler)

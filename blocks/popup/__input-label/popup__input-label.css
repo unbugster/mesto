@@ -1,0 +1,12 @@
+.popup__input-label {
+  all: unset;
+  position: relative;
+}
+
+.popup__input-label:not(:last-of-type) {
+  margin-bottom: 31px;
+}
+
+.popup__input-label:last-of-type {
+  margin-bottom: 48px;
+}
