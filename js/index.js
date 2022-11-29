@@ -111,7 +111,6 @@ const getCardElement = (card) => {
 
   removeBtn.addEventListener('click', removeCardHandler)
   likeBtn.addEventListener('click', likesToggleHandler);
-  image.addEventListener('click', () => openImgPopupHandler(card));
 
   title.textContent = card.name;
   image.src = card.link;
@@ -121,8 +120,11 @@ const getCardElement = (card) => {
     evt.target.src = "https://clck.ru/32fEE4";
     title.textContent = 'Image not found';
     evt.onerror = null;
+    card.link = evt.target.src;
+    card.name = title.textContent;
   })
 
+  image.addEventListener('click', () => openImgPopupHandler(card));
   return cardElement;
 }
 
