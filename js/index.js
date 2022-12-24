@@ -1,5 +1,6 @@
 import { initialCards, VALIDATION_CONFIG } from "./data.js";
 import { enableValidation, setButtonStateInactive, hideFormErrors } from "./validate.js";
+import Card from "./Card.js";
 
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
@@ -23,10 +24,7 @@ const popupAddCardInputName = popupAddCard.querySelector('.popup__input_info_car
 const popupAddCardInputLink = popupAddCard.querySelector('.popup__input_info_card-link');
 const popupAddCardCloseBtn = popupAddCard.querySelector('.popup__close-btn');
 const popupAddCardForm = popupAddCard.querySelector('.popup__form');
-
-const templateGalleryItem = document.querySelector('#gallery-item-template').content;
-const galleryItem = templateGalleryItem.querySelector('.gallery__item');
-
+const popupAddCardSubmitBtn = popupAddCard.querySelector('.popup__save-btn');
 
 function closeModalWindowEsc(evt) {
   const openedPopup = document.querySelector('.popup_opened')
@@ -56,19 +54,11 @@ const getCardImgInfo = (card) => {
   popupImgCardCaption.textContent = card.name;
 }
 
-const likesToggleHandler = (evt) => {
-  evt.target.classList.toggle('gallery__like-btn_active');
-}
-
 const submitProfileChangesHandler = (evt) => {
   evt.preventDefault();
   profileName.textContent = popupEditProfileInputName.value;
   profileActivity.textContent = popupEditProfileInputActivity.value;
   closePopup(popupEditProfile);
-}
-
-const removeCardHandler = (evt) => {
-  evt.target.closest('.gallery__item').remove();
 }
 
 const openImgPopupHandler = (card) => {
@@ -102,35 +92,9 @@ const closePopupWindowOverlayHandler = (evt) => {
   hideFormErrors(evt.currentTarget, VALIDATION_CONFIG)
 }
 
-const getCardElement = (card) => {
-  const cardElement = galleryItem.cloneNode(true);
-  const title = cardElement.querySelector('.gallery__title');
-  const image = cardElement.querySelector('.gallery__img');
-  const likeBtn = cardElement.querySelector('.gallery__like-btn');
-  const removeBtn = cardElement.querySelector('.gallery__remove-btn');
-
-  removeBtn.addEventListener('click', removeCardHandler)
-  likeBtn.addEventListener('click', likesToggleHandler);
-
-  title.textContent = card.name;
-  image.src = card.link;
-  image.alt = card.alt || card.name;
-
-  image.addEventListener("error", (evt) => {
-    evt.target.src = "https://clck.ru/32fEE4";
-    title.textContent = 'Image not found';
-    evt.onerror = null;
-    card.link = evt.target.src;
-    card.name = title.textContent;
-  })
-
-  image.addEventListener('click', () => openImgPopupHandler(card));
-  return cardElement;
-}
-
 const renderCard = (item) => {
-  const element = getCardElement(item);
-  galleryListContainer.prepend(element);
+  const newCard = new Card(item, "#gallery-item-template", openImgPopupHandler);
+  galleryListContainer.prepend(newCard.generateCard());
 }
 
 const renderNewCard = () => {
@@ -154,12 +118,9 @@ const addNewCardSubmitHandler = (evt) => {
   renderNewCard();
   popupAddCardForm.reset();
   closePopup(popupAddCard);
-  const submitBtn = evt.currentTarget.querySelector(".popup__save-btn");
 
-  setButtonStateInactive(submitBtn, VALIDATION_CONFIG.inactiveButtonClass)
+  setButtonStateInactive(popupAddCardSubmitBtn, VALIDATION_CONFIG.inactiveButtonClass)
 }
-
-
 
 renderInitialCards();
 enableValidation(VALIDATION_CONFIG);
