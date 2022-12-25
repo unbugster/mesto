@@ -1,6 +1,6 @@
 import { initialCards, VALIDATION_CONFIG } from "./data.js";
-import { enableValidation, setButtonStateInactive, hideFormErrors } from "./validate.js";
 import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
@@ -24,9 +24,11 @@ const popupAddCardInputName = popupAddCard.querySelector('.popup__input_info_car
 const popupAddCardInputLink = popupAddCard.querySelector('.popup__input_info_card-link');
 const popupAddCardCloseBtn = popupAddCard.querySelector('.popup__close-btn');
 const popupAddCardForm = popupAddCard.querySelector('.popup__form');
-const popupAddCardSubmitBtn = popupAddCard.querySelector('.popup__save-btn');
 
-function closeModalWindowEsc(evt) {
+const editProfileValidator = new FormValidator(VALIDATION_CONFIG, popupEditProfile);
+const addCardValidator = new FormValidator(VALIDATION_CONFIG, popupAddCard);
+
+function closePopupByEsc(evt) {
   const openedPopup = document.querySelector('.popup_opened')
   if (evt.key === 'Escape' || evt.key === 'Esc') {
     closePopup(openedPopup)
@@ -35,12 +37,12 @@ function closeModalWindowEsc(evt) {
 
 const openPopup = (popupEl) => {
   popupEl.classList.add('popup_opened');
-  document.addEventListener('keydown', closeModalWindowEsc);
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 const closePopup = (popupEl) => {
   popupEl.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeModalWindowEsc);
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
 const getProfileTextValues = () => {
@@ -80,7 +82,7 @@ const openPopupProfileEditHandler = () => {
 }
 
 const closePopupProfileEditHandler = () => {
-  hideFormErrors(popupEditProfile, VALIDATION_CONFIG)
+  editProfileValidator.resetValidation();
 }
 
 const closePopupWindowOverlayHandler = (evt) => {
@@ -89,7 +91,8 @@ const closePopupWindowOverlayHandler = (evt) => {
   }
 
   closePopup(evt.target);
-  hideFormErrors(evt.currentTarget, VALIDATION_CONFIG)
+  editProfileValidator.resetValidation();
+  addCardValidator.resetValidation();
 }
 
 const renderCard = (item) => {
@@ -119,11 +122,11 @@ const addNewCardSubmitHandler = (evt) => {
   popupAddCardForm.reset();
   closePopup(popupAddCard);
 
-  setButtonStateInactive(popupAddCardSubmitBtn, VALIDATION_CONFIG.inactiveButtonClass)
+  addCardValidator.setButtonStateInactive()
+  addCardValidator.resetValidation();
 }
 
 renderInitialCards();
-enableValidation(VALIDATION_CONFIG);
 
 profileAddBtn.addEventListener('click', openAddCardPopupHandler);
 profileEditBtn.addEventListener('click', openPopupProfileEditHandler)
@@ -139,3 +142,6 @@ popupAddCard.addEventListener('click', closePopupWindowOverlayHandler);
 
 popupImgCloseBtn.addEventListener('click', closePopupHandler)
 popupImgCard.addEventListener('click', closePopupWindowOverlayHandler);
+
+editProfileValidator.enableValidation();
+addCardValidator.enableValidation();
