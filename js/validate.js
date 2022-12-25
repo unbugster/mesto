@@ -1,7 +1,7 @@
-const showInputError = (formElement, inputElement, errorMessage, selectors) => {
+const showInputError = (formElement, inputElement, selectors) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(selectors.inputErrorClass);
-  errorElement.textContent = errorMessage;
+  errorElement.textContent = inputElement.validationMessage;
   errorElement.classList.add(selectors.errorClass);
 };
 
@@ -47,7 +47,7 @@ const hasInvalidInput = (inputList) => {
 
 const checkInputValidity = (formElement, inputElement, selectors) => {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage, selectors);
+    showInputError(formElement, inputElement, selectors);
   } else {
     hideInputError(formElement, inputElement, selectors);
   }
