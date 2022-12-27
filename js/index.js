@@ -29,15 +29,19 @@ const editProfileValidator = new FormValidator(VALIDATION_CONFIG, popupEditProfi
 const addCardValidator = new FormValidator(VALIDATION_CONFIG, popupAddCard);
 
 function closePopupByEsc(evt) {
-  const openedPopup = document.querySelector('.popup_opened')
   if (evt.key === 'Escape' || evt.key === 'Esc') {
-    closePopup(openedPopup)
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
 const openPopup = (popupEl) => {
   popupEl.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupByEsc);
+  addCardValidator.resetValidation();
+  addCardValidator.setButtonStateInactive();
+  editProfileValidator.resetValidation();
+  editProfileValidator.setButtonStateInactive();
 }
 
 const closePopup = (popupEl) => {
@@ -64,7 +68,7 @@ const submitProfileChangesHandler = (evt) => {
 }
 
 const openImgPopupHandler = (card) => {
-  getCardImgInfo(card)
+  getCardImgInfo(card);
   openPopup(popupImgCard);
 }
 
@@ -73,6 +77,7 @@ const closePopupHandler = (evt) => {
 }
 
 const openAddCardPopupHandler = () => {
+  popupAddCardForm.reset();
   openPopup(popupAddCard);
 }
 
@@ -91,8 +96,6 @@ const closePopupWindowOverlayHandler = (evt) => {
   }
 
   closePopup(evt.target);
-  editProfileValidator.resetValidation();
-  addCardValidator.resetValidation();
 }
 
 const renderCard = (item) => {
@@ -121,26 +124,23 @@ const addNewCardSubmitHandler = (evt) => {
   renderNewCard();
   popupAddCardForm.reset();
   closePopup(popupAddCard);
-
-  addCardValidator.setButtonStateInactive()
-  addCardValidator.resetValidation();
 }
 
 renderInitialCards();
 
 profileAddBtn.addEventListener('click', openAddCardPopupHandler);
-profileEditBtn.addEventListener('click', openPopupProfileEditHandler)
+profileEditBtn.addEventListener('click', openPopupProfileEditHandler);
 
 popupEditProfileForm.addEventListener('submit', submitProfileChangesHandler);
-popupEditProfileCloseBtn.addEventListener('click', closePopupHandler)
-popupEditProfileCloseBtn.addEventListener('click', closePopupProfileEditHandler)
+popupEditProfileCloseBtn.addEventListener('click', closePopupHandler);
+popupEditProfileCloseBtn.addEventListener('click', closePopupProfileEditHandler);
 popupEditProfile.addEventListener('click', closePopupWindowOverlayHandler);
 
-popupAddCardForm.addEventListener('submit', addNewCardSubmitHandler)
-popupAddCardCloseBtn.addEventListener('click', closePopupHandler)
+popupAddCardForm.addEventListener('submit', addNewCardSubmitHandler);
+popupAddCardCloseBtn.addEventListener('click', closePopupHandler);
 popupAddCard.addEventListener('click', closePopupWindowOverlayHandler);
 
-popupImgCloseBtn.addEventListener('click', closePopupHandler)
+popupImgCloseBtn.addEventListener('click', closePopupHandler);
 popupImgCard.addEventListener('click', closePopupWindowOverlayHandler);
 
 editProfileValidator.enableValidation();

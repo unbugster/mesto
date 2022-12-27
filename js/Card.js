@@ -12,7 +12,7 @@ export default class Card {
     const cardElement = document
       .querySelector(this._templateSelector)
       .content
-      .querySelector('.gallery__item')
+      .querySelector(".gallery__item")
       .cloneNode(true);
 
     return cardElement;
@@ -30,11 +30,19 @@ export default class Card {
     this._likeBtn.addEventListener("click", () => this._handleToggleLikeCard());
     this._removeBtn.addEventListener("click", () => this._handleDeleteCard());
     this._img.addEventListener("click", () => this._expandCardImg(this._data));
+    this._img.addEventListener("error", (evt) => {
+      const src = 'https://clck.ru/32fEE4';
+      const title = 'Image not found';
+      evt.onerror = null;
+      this._img.src = src;
+      this._img.alt = title;
+      this._title.textContent = title;
+    })
   }
 
   generateCard() {
     this._element = this._getTemplate();
-    this._title = this._element.querySelector(".gallery__title")
+    this._title = this._element.querySelector(".gallery__title");
     this._img = this._element.querySelector(".gallery__img");
     this._likeBtn = this._element.querySelector(".gallery__like-btn");
     this._removeBtn = this._element.querySelector(".gallery__remove-btn");
@@ -43,15 +51,6 @@ export default class Card {
     this._img.src = this._cardImg;
     this._img.alt = this._cardAlt || this._cardTitle;
     this._title.textContent = this._cardTitle;
-
-    this._img.addEventListener('error', (evt) => {
-      const src = 'https://clck.ru/32fEE4';
-      const title = 'Image not found';
-      evt.onerror = null;
-      this._img.src = src;
-      this._img.alt = title
-      this._title.textContent = title;
-    })
 
     return this._element;
   }
