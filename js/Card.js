@@ -1,11 +1,11 @@
 export default class Card {
-  constructor(data, templateSelector, expandCardImg) {
+  constructor(data, templateSelector, handleCardClick) {
     this._templateSelector = templateSelector;
     this._data = data;
     this._cardTitle = data.name;
     this._cardImg = data.link;
     this._cardAlt = data.alt;
-    this._expandCardImg = expandCardImg;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -29,7 +29,10 @@ export default class Card {
   _setEventListeners() {
     this._likeBtn.addEventListener("click", () => this._handleToggleLikeCard());
     this._removeBtn.addEventListener("click", () => this._handleDeleteCard());
-    this._img.addEventListener("click", () => this._expandCardImg(this._data));
+    this._img.addEventListener("click", () => {
+      this._handleCardClick(this._data);
+    });
+
     this._img.addEventListener("error", (evt) => {
       const src = 'https://clck.ru/32fEE4';
       const title = 'Image not found';
@@ -37,6 +40,8 @@ export default class Card {
       this._img.src = src;
       this._img.alt = title;
       this._title.textContent = title;
+      this._data.name = title;
+      this._data.link = src;
     })
   }
 
