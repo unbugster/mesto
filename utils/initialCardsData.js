@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
   {
     name: 'Киото',
     link: 'https://images.unsplash.com/photo-1605748430168-27742f194b64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=702&q=80',
@@ -30,16 +30,3 @@ const initialCards = [
     alt: 'Небольшая улица с фонарями, вывесками магазинов и кафе в Синдзюку ночью',
   },
 ];
-
-const VALIDATION_CONFIG = {
-  formSelector: '.popup__form',
-  formFieldset: '.popup__inputs-wrapper',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-btn',
-  inputLabelSelector: '.popup__input-label',
-  inactiveButtonClass: 'popup__save-btn_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_visible',
-};
-
-export { initialCards, VALIDATION_CONFIG };

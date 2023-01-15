@@ -1,19 +1,22 @@
-import { initialCards, VALIDATION_CONFIG } from "./data.js";
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import PopupWithImage from "./PopupWithImage.js";
-import UserInfo from "./UserInfo.js";
-import PopupWithForm from "./PopupWithForm.js";
+import Card from "../components/Card.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import FormValidator from "../components/FormValidator.js";
 
-const profileName = document.querySelector('.profile__name');
-const profileActivity = document.querySelector('.profile__activity');
-const profileAddBtn = document.querySelector('.profile__add-btn');
-const profileEditBtn = document.querySelector('.profile__edit-btn');
-const galleryListContainer = document.querySelector('.gallery__list');
-const popupEditProfile = document.querySelector('#edit-profile-popup');
-const popupImgCard = document.querySelector('#img-card-popup');
-const popupAddCard = document.querySelector('#add-card-popup');
+import { initialCards } from "../utils/initialCardsData.js";
+import { VALIDATION_CONFIG } from "../utils/validationConfig.js";
+import {
+  profileName,
+  profileActivity,
+  profileAddBtn,
+  profileEditBtn,
+  galleryListContainer,
+  popupEditProfile,
+  popupImgCard,
+  popupAddCard,
+} from "../utils/constants.js";
 
 const editProfileValidator = new FormValidator(VALIDATION_CONFIG, popupEditProfile);
 const addCardValidator = new FormValidator(VALIDATION_CONFIG, popupAddCard);
