@@ -4,7 +4,6 @@ export default class Card {
     this._data = data;
     this._cardTitle = data.name;
     this._cardImg = data.link;
-    this._cardAlt = data.alt;
     this._handleCardClick = handleCardClick;
   }
 
@@ -20,6 +19,7 @@ export default class Card {
 
   _handleDeleteCard() {
     this._element.remove();
+    this._element = null;
   }
 
   _handleToggleLikeCard() {
@@ -52,9 +52,8 @@ export default class Card {
     this._likeBtn = this._element.querySelector(".gallery__like-btn");
     this._removeBtn = this._element.querySelector(".gallery__remove-btn");
     this._setEventListeners();
-
     this._img.src = this._cardImg;
-    this._img.alt = this._cardAlt || this._cardTitle;
+    this._img.alt = this._cardTitle;
     this._title.textContent = this._cardTitle;
 
     return this._element;

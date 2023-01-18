@@ -10,20 +10,20 @@ import FormValidator from "../components/FormValidator.js";
 import { initialCards } from "../utils/initialCardsData.js";
 import { VALIDATION_CONFIG } from "../utils/validationConfig.js";
 import {
-  profileName,
-  profileActivity,
+  profileNameSelector,
+  profileActivitySelector,
   profileAddBtn,
   profileEditBtn,
-  galleryListContainer,
-  popupEditProfile,
-  popupImgCard,
-  popupAddCard,
+  galleryListContainerSelector,
+  popupEditProfileSelector,
+  popupImgCardSelector,
+  popupAddCardSelector,
 } from "../utils/constants.js";
 
-const editProfileValidator = new FormValidator(VALIDATION_CONFIG, popupEditProfile);
-const addCardValidator = new FormValidator(VALIDATION_CONFIG, popupAddCard);
-const userInfo = new UserInfo(profileName, profileActivity);
-const popupWithImage = new PopupWithImage({ popupSelector: popupImgCard });
+const profileEditValidator = new FormValidator(VALIDATION_CONFIG, popupEditProfileSelector);
+const cardAddFormValidator = new FormValidator(VALIDATION_CONFIG, popupAddCardSelector);
+const userInfo = new UserInfo({ profileName: profileNameSelector, profileActivity: profileActivitySelector });
+const popupWithImage = new PopupWithImage(popupImgCardSelector);
 
 const createCard = (card) => {
   const newCard = new Card(card, "#gallery-item-template", openImgPopupHandler);
@@ -31,7 +31,7 @@ const createCard = (card) => {
 }
 
 const profileFormPopup = new PopupWithForm({
-  popupSelector: popupEditProfile,
+  popupSelector: popupEditProfileSelector,
   handleSubmitForm: (formData) => {
     userInfo.setUserInfo(formData);
     profileFormPopup.close();
@@ -39,10 +39,10 @@ const profileFormPopup = new PopupWithForm({
 });
 
 const newCardFormPopup = new PopupWithForm({
-  popupSelector: popupAddCard,
+  popupSelector: popupAddCardSelector,
   handleSubmitForm: (formData) => {
-    const card = { name: formData.cardName, link: formData.cardLink };
-    renderCard.addItem(createCard(card));
+    const card = { name: formData.cardName, link: formData.cardImgLink };
+    renderInitialCards.addItem(createCard(card));
     newCardFormPopup.close();
   },
 });
@@ -51,37 +51,32 @@ const openImgPopupHandler = (card) => {
   popupWithImage.open(card);
 }
 
-const renderCard = new Section(
+const renderInitialCards = new Section(
   {
     items: initialCards,
     renderer: (card) => {
-      renderCard.addItem(createCard(card));
+      renderInitialCards.addItem(createCard(card));
     },
   },
-  galleryListContainer
+  galleryListContainerSelector
 );
-
-const renderInitialCards = () => {
-  initialCards.forEach(createCard);
-}
 
 profileEditBtn.addEventListener("click", () => {
   profileFormPopup.setInputValues(userInfo.getUserInfo());
-  editProfileValidator.resetValidation();
+  profileEditValidator.resetValidation();
   profileFormPopup.open();
 });
 
 profileAddBtn.addEventListener("click", () => {
-  addCardValidator.resetValidation();
+  cardAddFormValidator.resetValidation();
   newCardFormPopup.open();
 });
 
-renderInitialCards();
-editProfileValidator.enableValidation();
-addCardValidator.enableValidation();
+profileEditValidator.enableValidation();
+cardAddFormValidator.enableValidation();
 
 profileFormPopup.setEventListeners();
 newCardFormPopup.setEventListeners();
 popupWithImage.setEventListeners();
 
-renderCard.renderItems();
+renderInitialCards.renderItems();
