@@ -1,7 +1,7 @@
 export default class Api {
   constructor({ baseUrl, headers }) {
-    this._baseURL = baseUrl
-    this._headers = headers
+    this._baseURL = baseUrl;
+    this._headers = headers;
   }
 
   _checkResponse(res) {
@@ -13,7 +13,7 @@ export default class Api {
   }
 
   _request(url, options) {
-    return fetch(url, options).then(this._checkResponse)
+    return fetch(url, options).then(this._checkResponse);
   }
 
   getUserData() {
@@ -55,6 +55,20 @@ export default class Api {
 
   deleteCard(id) {
     return this._request(`${this._baseURL}/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+  }
+
+  addLikeCard(id) {
+    return this._request(`${this._baseURL}/cards/${id}/likes`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+  }
+
+  removeLikeCard(id) {
+    return this._request(`${this._baseURL}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers
     })

@@ -64,6 +64,27 @@ const createCard = (card) => {
             console.log('===Error in createCard', err);
           })
       })
+    },
+    handleCardLike: () => {
+      if (newCard.isLiked()) {
+        api.removeLikeCard(newCard._id)
+          .then((data) => {
+            newCard.removeLike();
+            newCard.checkLikesCounter(data);
+          })
+          .catch((err) => {
+            console.log('Error in removeLikeCard:', err);
+          });
+      } else {
+        api.addLikeCard(newCard._id)
+          .then((data) => {
+            newCard.addLike();
+            newCard.checkLikesCounter(data);
+          })
+          .catch((err) => {
+            console.log('Error in addLikeCard:', err);
+          });
+      }
     }
   });
 
