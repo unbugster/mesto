@@ -21,15 +21,18 @@ import {
   popupImgCardSelector,
   popupAddCardSelector,
   profileAvatarImageSelector,
+  deleteCardPopupSelector,
+  confirmDeleteCardSelector
 } from "../utils/constants.js";
+import PopupWithConfirmation from '../components/PopupWithConfirmation';
 
 const profileEditValidator = new FormValidator(VALIDATION_CONFIG, popupEditProfileSelector);
 const cardAddFormValidator = new FormValidator(VALIDATION_CONFIG, popupAddCardSelector);
 const userInfo = new UserInfo({ profileNameSelector, profileActivitySelector, profileAvatarImageSelector });
 const popupWithImage = new PopupWithImage(popupImgCardSelector);
 
-
 const api = new Api(configApi);
+const popupDeleteCard = new PopupWithConfirmation(deleteCardPopupSelector, confirmDeleteCardSelector);
 
 Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([userData, cards]) => {
@@ -41,7 +44,29 @@ Promise.all([api.getUserData(), api.getInitialCards()])
   });
 
 const createCard = (card) => {
-  const newCard = new Card(card, "#gallery-item-template", openImgPopupHandler);
+  const userId = userInfo.getUserId();
+  const newCard = new Card({
+    data: card,
+    userId,
+    templateSelector: "#gallery-item-template",
+
+    handleCardClick: openImgPopupHandler,
+    handleCardDelete: (id) => {
+      popupDeleteCard.open();
+      popupDeleteCard.setSubmitHandler(() => {
+
+        api.deleteCard(id)
+          .then(() => {
+            newCard.handleDeleteCard();
+            popupDeleteCard.close();
+          })
+          .catch((err) => {
+            console.log('===Error in createCard', err);
+          })
+      })
+    }
+  });
+
   return newCard.generateCard();
 }
 
@@ -64,8 +89,7 @@ const newCardFormPopup = new PopupWithForm({
   handleSubmitForm: (formData) => {
     api.addNewCard({ name: formData.cardName, link: formData.cardImgLink })
       .then((data) => {
-        const card = { name: data.name, link: data.link };
-        renderInitialCards.addItem(createCard(card));
+        renderInitialCards.addItem(createCard(data));
         newCardFormPopup.close();
       })
       .catch((err) => {
@@ -105,3 +129,4 @@ cardAddFormValidator.enableValidation();
 profileFormPopup.setEventListeners();
 newCardFormPopup.setEventListeners();
 popupWithImage.setEventListeners();
+popupDeleteCard.setEventListeners();

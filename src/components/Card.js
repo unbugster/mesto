@@ -1,11 +1,15 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick) {
-    this._templateSelector = templateSelector;
+  constructor({ data, userId, templateSelector, handleCardClick, handleCardDelete }) {
     this._data = data;
+    this._templateSelector = templateSelector;
+    this._owner = data.owner;
+    this._id = data._id;
+    this._userId = userId;
     this._likes = data.likes || [];
     this._cardTitle = data.name;
-    this._cardImg = data.link;
+    this._cardImgLink = data.link;
     this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
   }
 
   _getTemplate() {
@@ -18,7 +22,7 @@ export default class Card {
     return cardElement;
   }
 
-  _handleDeleteCard() {
+  handleDeleteCard() {
     this._element.remove();
     this._element = null;
   }
@@ -27,9 +31,23 @@ export default class Card {
     this._likeBtn.classList.toggle("gallery__like-btn_active");
   }
 
+  _isCardOwner() {
+    if (this._owner) {
+      return this._owner._id === this._userId;
+    }
+    return true;
+  }
+
+  _showDeleteButton() {
+    if (!this._isCardOwner()) {
+      this._removeBtn.remove();
+      this._removeBtn = null;
+    }
+  }
+
   _setEventListeners() {
     this._likeBtn.addEventListener("click", () => this._handleToggleLikeCard());
-    this._removeBtn.addEventListener("click", () => this._handleDeleteCard());
+    this._removeBtn.addEventListener("click", () => this._handleCardDelete(this._id));
     this._img.addEventListener("click", () => {
       this._handleCardClick(this._data);
     });
@@ -54,8 +72,10 @@ export default class Card {
     this._removeBtn = this._element.querySelector(".gallery__remove-btn");
     this._likesCounter = this._element.querySelector(".gallery__like-counter");
     this._likesCounter.textContent = this._likes.length || "";
+
     this._setEventListeners();
-    this._img.src = this._cardImg;
+    this._showDeleteButton();
+    this._img.src = this._cardImgLink;
     this._img.alt = this._cardTitle;
     this._title.textContent = this._cardTitle;
 

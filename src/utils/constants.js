@@ -5,5 +5,7 @@ export const popupEditProfileSelector = '#edit-profile-popup';
 export const popupImgCardSelector = '#img-card-popup';
 export const popupAddCardSelector = '#add-card-popup';
 export const profileAvatarImageSelector = '.profile__img';
+export const deleteCardPopupSelector = '#delete-card-popup';
+export const confirmDeleteCardSelector = '.popup__save-btn';
 export const profileEditBtn = document.querySelector('.profile__edit-btn');
 export const profileAddBtn = document.querySelector('.profile__add-btn');

@@ -18,13 +18,13 @@ export default class UserInfo {
     this._profileAvatarImage.src = avatar;
   }
 
-  getUserId(id) {
-    return this._userId = id;
+  getUserId() {
+    return this._userId;
   }
 
   makeInitialUserData({ name, about, avatar, _id }) {
     this.setUserInfo({ name, about });
     this.setUserAvatar(avatar);
-    this.getUserId(_id);
+    this._userId = _id;
   }
 }

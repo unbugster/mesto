@@ -4,13 +4,12 @@ export default class Api {
     this._headers = headers
   }
 
-
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
 
-    return Promise.reject(`Что-то пошло не так: ${res.status}`);
+    return Promise.reject(`Error in response: ${res.status}`);
   }
 
   _request(url, options) {
@@ -18,30 +17,32 @@ export default class Api {
   }
 
   getUserData() {
-    return this._request(`${this._baseURL}/users/me`, { headers: this._headers })
+    return this._request(`${this._baseURL}/users/me`,
+      {
+        headers: this._headers
+      })
   }
 
   getInitialCards() {
-    return this._request(`${this._baseURL}/cards`, {
-      headers: this._headers
-    })
+    return this._request(`${this._baseURL}/cards`,
+      {
+        headers: this._headers
+      })
   }
 
   setNewProfileInfo({ name, about }) {
-    return this._request(`${this._baseURL}/users/me`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({
-        name,
-        about
+    return this._request(`${this._baseURL}/users/me`,
+      {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({
+          name,
+          about
+        })
       })
-    })
   }
 
   addNewCard({ name, link }) {
-    console.log('===name', name);
-    console.log('===link', link);
-
     return this._request(`${this._baseURL}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -52,4 +53,10 @@ export default class Api {
     })
   }
 
+  deleteCard(id) {
+    return this._request(`${this._baseURL}/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+  }
 }
