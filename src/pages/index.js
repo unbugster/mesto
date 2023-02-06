@@ -22,14 +22,17 @@ import {
   popupAddCardSelector,
   profileAvatarImageSelector,
   deleteCardPopupSelector,
-  confirmDeleteCardSelector
+  confirmDeleteCardSelector,
+  updateAvatarPopupSelector,
+  profileAvatarContainer
 } from "../utils/constants.js";
 import PopupWithConfirmation from '../components/PopupWithConfirmation';
 
 const profileEditValidator = new FormValidator(VALIDATION_CONFIG, popupEditProfileSelector);
 const cardAddFormValidator = new FormValidator(VALIDATION_CONFIG, popupAddCardSelector);
-const userInfo = new UserInfo({ profileNameSelector, profileActivitySelector, profileAvatarImageSelector });
+const avatarFormValidator = new FormValidator(VALIDATION_CONFIG, updateAvatarPopupSelector);
 const popupWithImage = new PopupWithImage(popupImgCardSelector);
+const userInfo = new UserInfo({ profileNameSelector, profileActivitySelector, profileAvatarImageSelector });
 
 const api = new Api(configApi);
 const popupDeleteCard = new PopupWithConfirmation(deleteCardPopupSelector, confirmDeleteCardSelector);
@@ -119,6 +122,22 @@ const newCardFormPopup = new PopupWithForm({
   },
 });
 
+const popupAvatar = new PopupWithForm({
+  popupSelector: updateAvatarPopupSelector,
+  handleSubmitForm: (formData) => {
+    console.log('===formData', formData);
+
+    api.setUserAvatar(formData.avatarLink)
+      .then((data) => {
+        userInfo.setUserAvatar(data.avatar);
+        popupAvatar.close();
+      })
+      .catch(err => {
+        console.log('===Error in popupAvatar', err);
+      })
+  }
+});
+
 const openImgPopupHandler = (card) => {
   popupWithImage.open(card);
 }
@@ -144,10 +163,18 @@ profileAddBtn.addEventListener("click", () => {
   newCardFormPopup.open();
 });
 
+profileAvatarContainer.addEventListener('click', () => {
+  avatarFormValidator.resetValidation();
+  popupAvatar.open();
+})
+
 profileEditValidator.enableValidation();
 cardAddFormValidator.enableValidation();
+avatarFormValidator.enableValidation();
 
 profileFormPopup.setEventListeners();
 newCardFormPopup.setEventListeners();
 popupWithImage.setEventListeners();
 popupDeleteCard.setEventListeners();
+popupAvatar.setEventListeners();
+

@@ -73,4 +73,14 @@ export default class Api {
       headers: this._headers
     })
   }
+
+  setUserAvatar(avatar) {
+    return this._request(`${this._baseURL}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar
+      })
+    })
+  }
 }

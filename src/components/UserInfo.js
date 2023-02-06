@@ -14,8 +14,8 @@ export default class UserInfo {
     this._activityEl.textContent = about;
   }
 
-  setUserAvatar(avatar) {
-    this._profileAvatarImage.src = avatar;
+  setUserAvatar(link) {
+    this._profileAvatarImage.src = link;
   }
 
   getUserId() {
