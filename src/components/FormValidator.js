@@ -15,7 +15,7 @@ export default class FormValidator {
     this._errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(this._config.inputErrorClass);
     this._errorElement.classList.remove(this._config.errorClass);
-    this._errorElement.textContent = '';
+    this._errorElement.textContent = "";
   };
 
   _checkInputValidity = (inputElement) => {
@@ -33,12 +33,12 @@ export default class FormValidator {
   }
 
   _setButtonStateActive = () => {
-    this._buttonElement.removeAttribute('disabled');
+    this._buttonElement.removeAttribute("disabled");
     this._buttonElement.classList.remove(this._config.inactiveButtonClass);
   }
 
   setButtonStateInactive = () => {
-    this._buttonElement.setAttribute('disabled', true);
+    this._buttonElement.setAttribute("disabled", true);
     this._buttonElement.classList.add(this._config.inactiveButtonClass);
   }
 

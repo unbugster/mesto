@@ -43,15 +43,15 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._likeBtn.addEventListener("click", () => this._handleCardLike(this));
-    this._removeBtn.addEventListener("click", () => this._handleCardDelete(this._id));
-    this._img.addEventListener("click", () => {
+    this._likeBtn.addEventListener('click', () => this._handleCardLike(this));
+    this._removeBtn.addEventListener('click', () => this._handleCardDelete(this._id));
+    this._img.addEventListener('click', () => {
       this._handleCardClick(this._data);
     });
 
     this._img.addEventListener("error", (evt) => {
       const src = "https://clck.ru/32fEE4";
-      const title = 'Image not found';
+      const title = "Image not found";
       evt.onerror = null;
       this._img.src = src;
       this._img.alt = title;

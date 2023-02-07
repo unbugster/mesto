@@ -106,7 +106,7 @@ const profileFormPopup = new PopupWithForm({
         console.log("===Error in profileForm", err);
       })
       .finally(() => {
-        popupAvatar.renderLoading(false);
+        profileFormPopup.renderLoading(false);
       })
   },
 });
@@ -124,7 +124,7 @@ const newCardFormPopup = new PopupWithForm({
         console.log("===Incorrect img address", err);
       })
       .finally(() => {
-        popupAvatar.renderLoading(false);
+        newCardFormPopup.renderLoading(false);
       });
   },
 });
@@ -186,4 +186,3 @@ newCardFormPopup.setEventListeners();
 popupWithImage.setEventListeners();
 popupDeleteCard.setEventListeners();
 popupAvatar.setEventListeners();
-
