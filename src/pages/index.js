@@ -1,4 +1,4 @@
-import './index.css';
+import "./index.css";
 
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
@@ -6,7 +6,8 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import FormValidator from "../components/FormValidator.js";
-import Api from '../components/Api.js';
+import PopupWithConfirmation from "../components/PopupWithConfirmation";
+import Api from "../components/Api.js";
 
 import { configApi } from "../utils/configApi.js";
 import { initialCards } from "../utils/initialCardsData.js";
@@ -26,7 +27,6 @@ import {
   updateAvatarPopupSelector,
   profileAvatarContainer
 } from "../utils/constants.js";
-import PopupWithConfirmation from '../components/PopupWithConfirmation';
 
 const profileEditValidator = new FormValidator(VALIDATION_CONFIG, popupEditProfileSelector);
 const cardAddFormValidator = new FormValidator(VALIDATION_CONFIG, popupAddCardSelector);
@@ -43,7 +43,7 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     renderInitialCards.renderItems(cards.reverse())
   })
   .catch((err) => {
-    console.log('===Initial data error', err);
+    console.log("===Initial data error", err);
   });
 
 const createCard = (card) => {
@@ -52,7 +52,6 @@ const createCard = (card) => {
     data: card,
     userId,
     templateSelector: "#gallery-item-template",
-
     handleCardClick: openImgPopupHandler,
     handleCardDelete: (id) => {
       popupDeleteCard.open();
@@ -64,7 +63,7 @@ const createCard = (card) => {
             popupDeleteCard.close();
           })
           .catch((err) => {
-            console.log('===Error in createCard', err);
+            console.log("===Error in createCard", err);
           })
       })
     },
@@ -76,7 +75,7 @@ const createCard = (card) => {
             newCard.checkLikesCounter(data);
           })
           .catch((err) => {
-            console.log('Error in removeLikeCard:', err);
+            console.log("Error in removeLikeCard:", err);
           });
       } else {
         api.addLikeCard(newCard._id)
@@ -85,7 +84,7 @@ const createCard = (card) => {
             newCard.checkLikesCounter(data);
           })
           .catch((err) => {
-            console.log('Error in addLikeCard:', err);
+            console.log("Error in addLikeCard:", err);
           });
       }
     }
@@ -97,27 +96,35 @@ const createCard = (card) => {
 const profileFormPopup = new PopupWithForm({
   popupSelector: popupEditProfileSelector,
   handleSubmitForm: (formData) => {
+    profileFormPopup.renderLoading(true);
     api.setNewProfileInfo(formData)
       .then((data) => {
         userInfo.setUserInfo(data);
         profileFormPopup.close();
       })
       .catch((err) => {
-        console.log('===Error in profileForm', err);
-      });
+        console.log("===Error in profileForm", err);
+      })
+      .finally(() => {
+        popupAvatar.renderLoading(false);
+      })
   },
 });
 
 const newCardFormPopup = new PopupWithForm({
   popupSelector: popupAddCardSelector,
   handleSubmitForm: (formData) => {
+    newCardFormPopup.renderLoading(true);
     api.addNewCard({ name: formData.cardName, link: formData.cardImgLink })
       .then((data) => {
         renderInitialCards.addItem(createCard(data));
         newCardFormPopup.close();
       })
       .catch((err) => {
-        console.log('===Incorrect img address', err);
+        console.log("===Incorrect img address", err);
+      })
+      .finally(() => {
+        popupAvatar.renderLoading(false);
       });
   },
 });
@@ -125,15 +132,17 @@ const newCardFormPopup = new PopupWithForm({
 const popupAvatar = new PopupWithForm({
   popupSelector: updateAvatarPopupSelector,
   handleSubmitForm: (formData) => {
-    console.log('===formData', formData);
-
+    popupAvatar.renderLoading(true);
     api.setUserAvatar(formData.avatarLink)
       .then((data) => {
         userInfo.setUserAvatar(data.avatar);
         popupAvatar.close();
       })
-      .catch(err => {
-        console.log('===Error in popupAvatar', err);
+      .catch((err) => {
+        console.log("===Error in popupAvatar", err);
+      })
+      .finally(() => {
+        popupAvatar.renderLoading(false);
       })
   }
 });
@@ -152,13 +161,13 @@ const renderInitialCards = new Section(
   galleryListContainerSelector
 );
 
-profileEditBtn.addEventListener("click", () => {
+profileEditBtn.addEventListener('click', () => {
   profileFormPopup.setInputValues(userInfo.getUserInfo());
   profileEditValidator.resetValidation();
   profileFormPopup.open();
 });
 
-profileAddBtn.addEventListener("click", () => {
+profileAddBtn.addEventListener('click', () => {
   cardAddFormValidator.resetValidation();
   newCardFormPopup.open();
 });
